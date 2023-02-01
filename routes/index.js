@@ -1,6 +1,7 @@
 const express =  require('express')
 const homeRoute =  require('./home.route')
 const authRoute = require('./auth.route')
+const userRoute = require('./user.route')
 const router = express.Router()
 
 const routes = [
@@ -11,6 +12,10 @@ const routes = [
     {
         path:'/auth',
         route:authRoute
+    },
+    {
+        path:'/user',
+        route:userRoute
     }
 ]
 routes.forEach(r=>{

@@ -1,7 +1,30 @@
 const execute = require("./execute");
 const tokenService = require('./token.service')
 const StatusCodes= require('http-status-codes').StatusCodes
-
+const getAllUsers = async()=>{
+  try {
+    const q = `select (username,fullname) from hanuser`
+    const res = await execute(q)
+    const data = res.rows.map(row=>{
+      const rowData =  row.row.replace("(",'').replace(")",'').split(',')
+      return{
+        username:rowData[0],
+        fullname:rowData[1].replace(/"/g,'')
+      }
+    })
+    return {
+      status: StatusCodes.OK,
+      data: {
+        data
+      }
+    }
+  } catch (e) {
+    return {
+      status: 500,
+      data: e,
+    };
+  }
+}
 const getUser = async (username,password = '') => {
   try {
     const query = password?`select * from hanuser where username = '${username}' and password = '${password}'` 
@@ -94,5 +117,6 @@ const login = async(username,password)=>{
 module.exports = {
   getUser,
   createUser,
-  login
+  login,
+  getAllUsers
 };
