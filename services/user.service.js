@@ -90,9 +90,8 @@ const login = async(username,password)=>{
    
     try{
         const getU = await getUser(username,password)
-       
         if(getU.status == StatusCodes.OK){
-            const token = tokenService.generateToken(username)
+            const token = tokenService.generateToken(getU.data.data)
             return {
                 status:StatusCodes.OK,
                 data:{
