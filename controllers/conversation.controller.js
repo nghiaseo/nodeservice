@@ -5,6 +5,13 @@ const insertMessage = (req,res)=>{
         res.status(result.status).send(result.data)
     })
 }
+const getConversation = (req,res)=>{
+    const coupleIds = req.body
+    convService.getConversation(coupleIds).then(result=>{
+        res.status(result.status).send(result.data)
+    })
+}
 module.exports = {
-    insertMessage
+    insertMessage,
+    getConversation
 }

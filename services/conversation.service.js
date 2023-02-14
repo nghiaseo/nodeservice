@@ -11,6 +11,32 @@ const getAllMessage = async()=>{
         }
     }
 }
+const getConversation = async (coupleIds)=>{
+    try{
+        const couple = coupleIds.id1<coupleIds.id2?coupleIds.id1+'-'+coupleIds.id2:coupleIds.id2+'-'+coupleIds.id1
+        const query = `select * from conversation where couple='${couple}' ORDER BY createtime ASC`
+        const res = await execute(query)
+        if(res.rowCount==0)
+        return{
+            status:StatusCodes.OK,
+            data:{
+                data:[]
+            }
+        }
+        else return{
+            status:StatusCodes.OK,
+            data:{
+                data:res.rows
+            }
+        }
+    }
+    catch(e){
+        return{
+            status:500,
+            data:e
+        }
+    }
+}
 const insertMessage = async(message)=>{
     const query_createtb = `create table if not exists conversation(
         couple varchar NOT NULL,
@@ -53,5 +79,6 @@ const insertMessage = async(message)=>{
 }
 module.exports = {
     insertMessage,
-    getAllMessage
+    getAllMessage,
+    getConversation
 }
