@@ -12,6 +12,14 @@ const getAllMessage = async()=>{
     }
 }
 const insertMessage = async(message)=>{
+    const query_createtb = `create table if not exists conversation(
+        couple varchar NOT NULL,
+        sender varchar NOT NULL,
+        receiver varchar NOT NULL,
+        message varchar NOT NULL,
+        createtime timestamp NOT NULL        
+    )`;
+  await execute(query_createtb);
     try{
         const sender = message.sender
         const receiver = message.receiver
